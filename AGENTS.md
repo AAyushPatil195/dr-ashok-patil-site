@@ -14,7 +14,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - This repository is the production website for Dr. Ashok A. Patil.
 - The engineering foundation is approved and UI development is proceeding in explicitly approved slices.
-- The current authorized slice is the global Header/Navbar and Home Hero only. Do not build later Home sections or additional pages until the owner reviews this slice and explicitly approves the next one.
+- The global Header/Navbar and Home Hero are approved and must not be materially redesigned.
+- The current authorized slice contains only these next Home sections: Quick Clinic Information, Treatments & Services Preview, and Trust / Why Patients Choose Him. Stop after these sections; do not build later Home sections or additional pages until the owner explicitly approves the next slice.
 - Do not invent missing medical, achievement, camp, contact, or integration details. Mark them as pending or ask when they become necessary.
 
 ## Practitioner facts and safe wording
@@ -94,5 +95,7 @@ Achievements may cover professional leadership, community service, awards, certi
 ## Source control
 
 - GitHub remote: `https://github.com/AAyushPatil1195/dr-ashok-patil-site.git`.
+- Do not run Git commands or perform any Git action, including status, diff, add, commit, branch, checkout, pull, push, merge, rebase, reset, tag, or remote changes, unless the owner explicitly requests that specific Git work.
+- Make code and content changes only until the owner explicitly authorizes Git work.
 - Never overwrite remote history without explicit approval.
 - Never commit `.env` files, credentials, real personal phone numbers, build output, caches, or editor/OS junk.

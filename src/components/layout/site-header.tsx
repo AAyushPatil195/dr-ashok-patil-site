@@ -104,7 +104,14 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
+      <header
+        data-state={isScrolled ? "floating" : "expanded"}
+        className={`pointer-events-none fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-300 ease-out ${
+          isScrolled
+            ? "border-transparent bg-transparent backdrop-blur-none"
+            : "border-border/80 bg-background/90 backdrop-blur-md"
+        }`}
+      >
         <div
           className={`site-container pointer-events-auto transition-[padding] duration-300 ease-out ${
             isScrolled ? "pt-2.5" : "pt-0"
@@ -113,8 +120,8 @@ export function SiteHeader() {
           <div
             className={`flex items-center justify-between transition-[height,border-radius,background-color,border-color,box-shadow,padding] duration-300 ease-out ${
               isScrolled
-                ? "h-16 rounded-[1.15rem] border border-border bg-surface/90 px-3.5 shadow-floating backdrop-blur-xl sm:px-5"
-                : "h-20 border-b border-border/80 bg-background/90 px-0 backdrop-blur-md"
+                ? "h-16 rounded-[1.15rem] border border-border bg-surface/90 px-3.5 shadow-navbar backdrop-blur-xl sm:px-5"
+                : "h-20 rounded-none border border-transparent bg-transparent px-0 shadow-none backdrop-blur-none"
             }`}
           >
             <Link

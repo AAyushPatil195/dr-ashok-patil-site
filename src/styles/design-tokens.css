@@ -17,6 +17,12 @@
   --primary-hover: color-mix(in srgb, var(--primary) 88%, var(--text));
   --accent-hover: color-mix(in srgb, var(--accent) 88%, var(--text));
   --surface-muted: color-mix(in srgb, var(--soft-accent) 58%, var(--surface));
+  --surface-raised: color-mix(in srgb, var(--surface) 94%, var(--soft-accent));
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  --dark-panel: color-mix(in srgb, var(--surface) 8%, transparent);
+  --dark-panel-strong: color-mix(in srgb, var(--surface) 12%, transparent);
+  --dark-border: color-mix(in srgb, var(--surface) 18%, transparent);
+  --dark-text-muted: color-mix(in srgb, var(--surface) 72%, var(--primary-dark));
   --overlay: color-mix(in srgb, var(--primary-dark) 82%, transparent);
   --focus-ring: color-mix(in srgb, var(--accent) 82%, var(--primary-dark));
   --selection-background: color-mix(in srgb, var(--accent) 24%, transparent);
@@ -49,6 +55,9 @@
   --shadow-sm: 0 0.25rem 1rem var(--shadow-color);
   --shadow-md: 0 1rem 2.5rem var(--shadow-color);
   --shadow-lg: 0 1.5rem 4rem var(--shadow-color);
+  --depth-standard: 0 0.2rem 0.7rem var(--shadow-color);
+  --depth-featured: 0 0.85rem 2.1rem var(--shadow-color);
+  --depth-navbar: 0 0.9rem 2.4rem var(--shadow-color);
 
   /* CSS interaction timings; Motion equivalents live in src/lib/motion.ts. */
   --motion-duration-fast: 180ms;
@@ -68,9 +77,19 @@
   --color-muted: var(--text-muted);
   --color-border: var(--border-subtle);
   --color-border-strong: var(--border-strong);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-raised: var(--surface-raised);
+  --color-accent-soft: var(--accent-soft);
+  --color-dark-panel: var(--dark-panel);
+  --color-dark-panel-strong: var(--dark-panel-strong);
+  --color-dark-border: var(--dark-border);
+  --color-dark-muted: var(--dark-text-muted);
   --font-sans: var(--typeface-body);
   --font-display: var(--typeface-display);
   --shadow-soft: var(--shadow-sm);
   --shadow-card: var(--shadow-md);
   --shadow-floating: var(--shadow-lg);
+  --shadow-standard: var(--depth-standard);
+  --shadow-featured: var(--depth-featured);
+  --shadow-navbar: var(--depth-navbar);
 }
