@@ -100,6 +100,7 @@ export function Hero() {
           </motion.p>
 
           <motion.div
+            id="hero-actions"
             variants={revealItem}
             className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row"
           >

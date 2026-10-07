@@ -81,7 +81,6 @@ const revealVariants = {
 export function TreatmentsPreview() {
   return (
     <section
-      id="treatments"
       aria-labelledby="treatments-heading"
       className="relative overflow-hidden bg-surface py-16 sm:py-20 lg:py-28"
     >
@@ -90,7 +89,7 @@ export function TreatmentsPreview() {
         className="absolute right-0 top-0 h-80 w-80 rounded-full bg-soft-accent/65 blur-3xl"
       />
 
-      <div className="site-container relative">
+      <div id="treatments" className="site-container relative">
         <motion.div
           className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"
           initial="hidden"

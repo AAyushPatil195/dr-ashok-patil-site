@@ -40,11 +40,13 @@ const profileDetails = [
 export function AboutPreview() {
   return (
     <section
-      id="about"
       aria-labelledby="about-preview-heading"
       className="relative overflow-hidden bg-background pt-8 pb-16 sm:pt-10 sm:pb-20 lg:pt-12 lg:pb-28"
     >
-      <div className="site-container grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 xl:gap-24">
+      <div
+        id="about"
+        className="site-container grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 xl:gap-24"
+      >
         <motion.div
           className="relative mx-auto w-full max-w-xl"
           initial="hidden"

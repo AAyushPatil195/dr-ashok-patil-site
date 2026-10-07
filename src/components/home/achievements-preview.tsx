@@ -66,7 +66,6 @@ const revealVariants = {
 export function AchievementsPreview() {
   return (
     <section
-      id="achievements"
       aria-labelledby="achievements-heading"
       className="relative min-h-[calc(100svh-var(--header-offset))] overflow-hidden bg-background pt-8 pb-16 sm:pt-10 sm:pb-20 lg:pt-12 lg:pb-28"
     >
@@ -75,7 +74,10 @@ export function AchievementsPreview() {
         className="absolute -right-28 top-16 size-80 rounded-full bg-soft-accent/60 blur-3xl"
       />
 
-      <div className="site-container relative grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:gap-16 xl:gap-24">
+      <div
+        id="achievements"
+        className="site-container relative grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:gap-16 xl:gap-24"
+      >
         <motion.div
           initial="hidden"
           whileInView="visible"

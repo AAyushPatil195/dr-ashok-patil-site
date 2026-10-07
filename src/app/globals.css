@@ -116,3 +116,9 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+@media (max-width: 47.999rem) {
+  html {
+    scroll-padding-bottom: var(--mobile-dock-safe-offset);
+  }
+}

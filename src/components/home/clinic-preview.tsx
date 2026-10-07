@@ -120,11 +120,10 @@ const clinicDetails = [
 export function ClinicPreview() {
   return (
     <section
-      id="clinic"
       aria-labelledby="clinic-preview-heading"
       className="relative overflow-hidden bg-surface pt-8 pb-16 sm:pt-10 sm:pb-20 lg:pt-12 lg:pb-28"
     >
-      <div className="site-container">
+      <div id="clinic" className="site-container">
         <motion.div
           className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"
           initial="hidden"
