@@ -1,12 +1,20 @@
 "use client";
 
+import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
-import { Award, CalendarHeart, HeartHandshake, Milestone } from "lucide-react";
+import {
+  ArrowRight,
+  Award,
+  CalendarHeart,
+  HeartHandshake,
+  Milestone,
+} from "lucide-react";
 import { motion } from "motion/react";
 import {
   motionDuration,
   motionEasing,
   motionOffset,
+  motionScale,
   motionStagger,
 } from "@/lib/motion";
 
@@ -24,13 +32,13 @@ const categories: AchievementCategory[] = [
     icon: HeartHandshake,
   },
   {
-    title: "Health camps",
+    title: "Periodic health & child-health camps",
     description:
-      "Periodic Monday community and child-health camps supporting local families.",
+      "Periodic Monday camps supporting community and child health in Jalgaon.",
     icon: CalendarHeart,
   },
   {
-    title: "Professional & service milestones",
+    title: "Professional milestones",
     description:
       "Nearly three decades of consistent general practice and patient service.",
     icon: Milestone,
@@ -60,7 +68,7 @@ export function AchievementsPreview() {
     <section
       id="achievements"
       aria-labelledby="achievements-heading"
-      className="relative overflow-hidden bg-background py-16 sm:py-20 lg:py-28"
+      className="relative min-h-[calc(100svh-var(--header-offset))] overflow-hidden bg-background pt-8 pb-16 sm:pt-10 sm:pb-20 lg:pt-12 lg:pb-28"
     >
       <div
         aria-hidden="true"
@@ -111,6 +119,25 @@ export function AchievementsPreview() {
             <p className="max-w-36 pb-1 text-sm leading-5 font-semibold text-muted">
               years of clinical service in Jalgaon
             </p>
+          </motion.div>
+
+          <motion.div variants={revealVariants} className="mt-8">
+            <motion.div
+              className="inline-flex"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: motionScale.press }}
+            >
+              <Link
+                href="/achievements"
+                className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-control bg-primary px-5 text-sm font-extrabold text-surface shadow-standard transition-colors duration-200 hover:bg-primary-dark focus-visible:outline-offset-4"
+              >
+                View achievements
+                <ArrowRight
+                  aria-hidden="true"
+                  className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                />
+              </Link>
+            </motion.div>
           </motion.div>
         </motion.div>
 

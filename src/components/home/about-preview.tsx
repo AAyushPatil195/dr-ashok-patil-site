@@ -1,7 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, BadgeCheck, Stethoscope, UserRound } from "lucide-react";
+import {
+  ArrowRight,
+  BadgeCheck,
+  Languages,
+  Stethoscope,
+  UserRound,
+} from "lucide-react";
 import { motion } from "motion/react";
 import { mediaConfig } from "@/config/media";
 import {
@@ -35,7 +42,7 @@ export function AboutPreview() {
     <section
       id="about"
       aria-labelledby="about-preview-heading"
-      className="relative overflow-hidden bg-background py-16 sm:py-20 lg:py-28"
+      className="relative overflow-hidden bg-background pt-8 pb-16 sm:pt-10 sm:pb-20 lg:pt-12 lg:pb-28"
     >
       <div className="site-container grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 xl:gap-24">
         <motion.div
@@ -150,20 +157,41 @@ export function AboutPreview() {
             ))}
           </motion.dl>
 
+          <motion.div
+            variants={revealVariants}
+            className="mt-6 flex items-start gap-3 border-l-2 border-accent pl-4"
+          >
+            <Languages
+              aria-hidden="true"
+              className="mt-0.5 size-4 shrink-0 text-primary"
+            />
+            <p className="text-sm leading-6 text-muted">
+              <span className="font-extrabold text-primary-dark">
+                Languages:
+              </span>{" "}
+              Marathi, Hindi and Hinglish, with some English, Marwari and
+              Bengali.
+            </p>
+          </motion.div>
+
           <motion.div variants={revealVariants} className="mt-8">
-            <motion.a
-              href="/about"
-              className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-control bg-primary px-5 text-sm font-extrabold text-surface shadow-standard transition-colors duration-200 hover:bg-primary-dark focus-visible:outline-offset-4"
+            <motion.div
+              className="inline-flex"
               whileHover={{ y: -2 }}
               whileTap={{ scale: motionScale.press }}
             >
-              <Stethoscope aria-hidden="true" className="size-4" />
-              Know more about Dr. Patil
-              <ArrowRight
-                aria-hidden="true"
-                className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
-              />
-            </motion.a>
+              <Link
+                href="/about"
+                className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-control bg-primary px-5 text-sm font-extrabold text-surface shadow-standard transition-colors duration-200 hover:bg-primary-dark focus-visible:outline-offset-4"
+              >
+                <Stethoscope aria-hidden="true" className="size-4" />
+                Know more about Dr. Patil
+                <ArrowRight
+                  aria-hidden="true"
+                  className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                />
+              </Link>
+            </motion.div>
           </motion.div>
 
           <motion.div

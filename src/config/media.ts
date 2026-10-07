@@ -10,7 +10,7 @@ export const mediaConfig = {
       src: null as string | null,
       alt: "Consultation cabin at Dr. Ashok A. Patil's clinic",
       label: "Consultation cabin",
-      detail: "Dedicated cabin · AC available here",
+      detail: "Dedicated cabin · AC available only here",
     },
     {
       key: "treatment-area",
