@@ -1,14 +1,12 @@
 :root {
   color-scheme: light;
-
-  /* Palette B: Petrol + Terracotta. Keep all source colors here. */
-  --background: #F7FAF9;
-  --surface: #FFFFFF;
-  --primary: #155E63;
-  --primary-dark: #123F45;
-  --accent: #C86B42;
-  --soft-accent: #E6F1EE;
-  --text: #19343B;
+--background: #F6FAFD;
+--surface: #FFFFFF;
+--primary: #1976D2;
+--primary-dark: #0D47A1;
+--accent: #42A5F5;
+--soft-accent: #E3F2FD;
+--text: #15324A;
 
   /* Derived semantic colors */
   --text-muted: color-mix(in srgb, var(--text) 68%, var(--surface));

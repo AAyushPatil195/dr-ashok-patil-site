@@ -15,7 +15,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - This repository is the production website for Dr. Ashok A. Patil.
 - The engineering foundation is approved and UI development is proceeding in explicitly approved slices.
 - The global Header/Navbar and Home Hero are approved and must not be materially redesigned.
-- The current authorized slice contains only these next Home sections: Quick Clinic Information, Treatments & Services Preview, and Trust / Why Patients Choose Him. Stop after these sections; do not build later Home sections or additional pages until the owner explicitly approves the next slice.
+- The Header/Navbar, Hero, Quick Clinic Information, Treatments & Services Preview, and Trust / Why Patients Choose Him sections are approved and must not be materially redesigned.
+- The current authorized slice contains only these next Home sections: About Dr. Ashok Patil Preview, Clinic / Gallery Preview, and Achievements & Community Care Preview. Stop after these sections; do not build later Home sections or additional pages until the owner explicitly approves the next slice.
 - Do not invent missing medical, achievement, camp, contact, or integration details. Mark them as pending or ask when they become necessary.
 
 ## Practitioner facts and safe wording
