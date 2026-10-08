@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { SiteShell } from "@/components/layout/site-shell";
 import { siteConfig } from "@/config/site";
 import { getSiteUrl, isIndexingEnabled, isPublicSiteUrl } from "@/lib/site-url";
@@ -29,9 +30,25 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang={siteConfig.language} className="h-full antialiased">
+    <html
+      lang={siteConfig.language}
+      className="h-full antialiased"
+      data-scroll-behavior="smooth"
+    >
       <body>
         <SiteShell>{children}</SiteShell>
+        <Script id="contact-page-entry" strategy="beforeInteractive">
+          {`(() => {
+            if (
+              window.location.pathname !== "/contact" ||
+              window.location.hash ||
+              !("scrollRestoration" in window.history)
+            ) return;
+
+            document.documentElement.dataset.contactEntry = "true";
+            window.history.scrollRestoration = "manual";
+          })();`}
+        </Script>
       </body>
     </html>
   );

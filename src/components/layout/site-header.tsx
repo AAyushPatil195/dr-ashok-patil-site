@@ -12,7 +12,7 @@ const navigationItems = [
   { label: "Treatments", href: "/#treatments" },
   { label: "Clinic", href: "/#clinic" },
   { label: "Achievements", href: "/#achievements" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 const focusableSelector =

@@ -8,7 +8,7 @@ const footerLinks = [
   { label: "Treatments", href: "/#treatments" },
   { label: "Clinic", href: "/#clinic" },
   { label: "Achievements", href: "/#achievements" },
-  { label: "Visit", href: "/#contact" },
+  { label: "Visit", href: "/contact" },
 ] as const;
 
 export function SiteFooter() {
