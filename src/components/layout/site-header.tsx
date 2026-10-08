@@ -10,7 +10,7 @@ const navigationItems = [
   { label: "Home", href: "/#home" },
   { label: "About", href: "/about" },
   { label: "Treatments", href: "/#treatments" },
-  { label: "Clinic", href: "/#clinic" },
+  { label: "Clinic", href: "/clinic" },
   { label: "Achievements", href: "/#achievements" },
   { label: "Contact", href: "/contact" },
 ] as const;

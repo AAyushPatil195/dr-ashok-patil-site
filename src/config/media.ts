@@ -26,5 +26,12 @@ export const mediaConfig = {
       label: "Waiting area",
       detail: "Spacious seating for patients and families",
     },
+    {
+      key: "clinic-environment",
+      src: null as string | null,
+      alt: "Hygiene-focused interior at Dr. Ashok A. Patil's clinic",
+      label: "Clinic environment",
+      detail: "Practical, hygiene-focused permanent clinic",
+    },
   ],
 } as const;
