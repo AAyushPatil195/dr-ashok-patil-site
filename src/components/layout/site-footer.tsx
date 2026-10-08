@@ -4,7 +4,7 @@ import { clinicConfig } from "@/config/clinic";
 
 const footerLinks = [
   { label: "Home", href: "/#home" },
-  { label: "About", href: "/#about" },
+  { label: "About", href: "/about" },
   { label: "Treatments", href: "/#treatments" },
   { label: "Clinic", href: "/#clinic" },
   { label: "Achievements", href: "/#achievements" },
