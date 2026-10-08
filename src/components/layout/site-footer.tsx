@@ -7,7 +7,7 @@ const footerLinks = [
   { label: "About", href: "/about" },
   { label: "Treatments", href: "/#treatments" },
   { label: "Clinic", href: "/clinic" },
-  { label: "Achievements", href: "/#achievements" },
+  { label: "Achievements", href: "/achievements" },
   { label: "Visit", href: "/contact" },
 ] as const;
 
@@ -106,8 +106,12 @@ export function SiteFooter() {
         <div className="flex flex-col gap-3 pt-5 text-xs leading-5 text-surface/55 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Dr. Ashok A. Patil. All rights reserved.</p>
           <div className="flex flex-wrap gap-x-4 gap-y-1" aria-label="Policy information">
-            <span>Privacy policy pending</span>
-            <span>Medical disclaimer pending</span>
+            <Link
+              href="/privacy"
+              className="rounded-sm transition-colors hover:text-surface focus-visible:text-surface"
+            >
+              Privacy & Medical Disclaimer
+            </Link>
           </div>
         </div>
       </div>
