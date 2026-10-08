@@ -4,7 +4,9 @@
 --surface: #FFFFFF;
 --primary: #1976D2;
 --primary-dark: #0D47A1;
---accent: #42A5F5;
+  --accent: #42A5F5;
+  --primary-ink: color-mix(in srgb, var(--primary) 75%, var(--primary-dark));
+  --accent-ink: color-mix(in srgb, var(--accent) 35%, var(--primary-dark));
 --soft-accent: #E3F2FD;
 --text: #15324A;
 
@@ -68,12 +70,32 @@
   --motion-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/*
+ * Small blue labels need a little more ink than decorative icons to maintain
+ * AA contrast on the page and soft-accent surfaces. The source palette stays
+ * unchanged; these are semantic text treatments derived from it.
+ */
+:where(.text-primary.text-xs, .text-primary.text-sm, .text-primary.text-base) {
+  color: var(--primary-ink);
+}
+
+:where(.text-accent.text-xs, .text-accent.text-sm, .text-accent.text-base) {
+  color: var(--accent-ink);
+}
+
+:where(.bg-primary-dark, .bg-text)
+  :where(.text-accent.text-xs, .text-accent.text-sm, .text-accent.text-base) {
+  color: var(--soft-accent);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);
   --color-accent: var(--accent);
+  --color-primary-ink: var(--primary-ink);
+  --color-accent-ink: var(--accent-ink);
   --color-soft-accent: var(--soft-accent);
   --color-text: var(--text);
   --color-muted: var(--text-muted);

@@ -199,7 +199,7 @@ export function EnquirySection() {
                 <Mail aria-hidden="true" className="size-5" />
               </span>
               <span className="text-sm leading-6 font-semibold text-surface/85">
-                Requests are delivered privately by email.
+                Requests can be delivered to the clinic by email.
               </span>
             </li>
           </motion.ul>

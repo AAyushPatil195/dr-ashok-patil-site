@@ -9,7 +9,7 @@ import { motionDuration, motionEasing, motionStagger } from "@/lib/motion";
 const navigationItems = [
   { label: "Home", href: "/#home" },
   { label: "About", href: "/about" },
-  { label: "Treatments", href: "/#treatments" },
+  { label: "Treatments", href: "/treatments" },
   { label: "Clinic", href: "/clinic" },
   { label: "Achievements", href: "/achievements" },
   { label: "Contact", href: "/contact" },

@@ -5,7 +5,7 @@ import { clinicConfig } from "@/config/clinic";
 const footerLinks = [
   { label: "Home", href: "/#home" },
   { label: "About", href: "/about" },
-  { label: "Treatments", href: "/#treatments" },
+  { label: "Treatments", href: "/treatments" },
   { label: "Clinic", href: "/clinic" },
   { label: "Achievements", href: "/achievements" },
   { label: "Visit", href: "/contact" },
@@ -91,7 +91,7 @@ export function SiteFooter() {
               Enquiries
             </h2>
             <p className="mt-3 text-sm leading-6 text-surface/68">
-              Send an appointment or general enquiry through the secure website form.
+              Send an appointment or general enquiry through the website form.
             </p>
             <Link
               href="/#enquiry"

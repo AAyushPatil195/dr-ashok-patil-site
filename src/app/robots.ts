@@ -4,7 +4,7 @@ import { getSiteUrl, isIndexingEnabled } from "@/lib/site-url";
 export default function robots(): MetadataRoute.Robots {
   const siteUrl = getSiteUrl();
 
-  if (!isIndexingEnabled(siteUrl)) {
+  if (!isIndexingEnabled()) {
     return {
       rules: {
         userAgent: "*",

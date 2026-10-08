@@ -1,27 +1,30 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { SiteShell } from "@/components/layout/site-shell";
+import { SiteStructuredData } from "@/components/seo/site-structured-data";
 import { siteConfig } from "@/config/site";
-import { getSiteUrl, isIndexingEnabled, isPublicSiteUrl } from "@/lib/site-url";
+import { getSiteUrl, isIndexingEnabled } from "@/lib/site-url";
 import "./globals.css";
 
 const siteUrl = getSiteUrl();
-const hasPublicSiteUrl = isPublicSiteUrl(siteUrl);
-const allowIndexing = isIndexingEnabled(siteUrl);
+const allowIndexing = isIndexingEnabled();
 
 export const metadata: Metadata = {
-  ...(hasPublicSiteUrl
-    ? {
-        metadataBase: siteUrl,
-        alternates: { canonical: "/" },
-      }
-    : {}),
+  metadataBase: siteUrl,
   title: {
     default: siteConfig.title,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.practitioner.name }],
+  creator: siteConfig.practitioner.name,
+  publisher: siteConfig.practitioner.name,
+  formatDetection: {
+    telephone: false,
+    address: false,
+    email: false,
+  },
   robots: {
     index: allowIndexing,
     follow: allowIndexing,
@@ -36,6 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
     >
       <body>
+        <SiteStructuredData />
         <SiteShell>{children}</SiteShell>
         <Script id="contact-page-entry" strategy="beforeInteractive">
           {`(() => {
