@@ -68,6 +68,14 @@
   --motion-duration-base: 320ms;
   --motion-duration-reveal: 500ms;
   --motion-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Clinic photo composition */
+  --gallery-portrait-ratio: 3 / 4;
+  --gallery-landscape-ratio: 4 / 3;
+  --gallery-lead-mobile-ratio: 16 / 10;
+  --gallery-lead-desktop-ratio: 2 / 1;
+  --gallery-editorial-wide-ratio: 16 / 6;
+  --gallery-backdrop: color-mix(in srgb, var(--text) 92%, transparent);
 }
 
 /*

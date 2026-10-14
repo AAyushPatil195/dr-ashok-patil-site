@@ -50,7 +50,99 @@ export function Hero() {
         className="absolute -left-32 top-28 -z-10 size-72 rounded-full border border-primary/10"
       />
 
-      <div className="site-container grid items-center gap-12 lg:grid-cols-[1.03fr_0.97fr] lg:gap-10 xl:gap-16">
+      <div className="site-container grid items-center gap-12 lg:grid-cols-[0.97fr_1.03fr] lg:gap-10 xl:gap-16">
+        <motion.div
+          className="relative mx-auto w-full max-w-xl lg:max-w-none"
+          initial={{
+            opacity: 0,
+            scale: 0.985,
+            y: 12,
+          }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{
+            duration: 0.62,
+            delay: 0.18,
+            ease: motionEasing.standard,
+          }}
+        >
+          <div className="relative isolate min-h-[27rem] overflow-hidden rounded-[2rem_2rem_4.5rem_2rem] border border-primary/10 bg-soft-accent shadow-[0_1.5rem_4rem_var(--shadow-color)] sm:min-h-[34rem] lg:min-h-[37rem]">
+            <div
+              aria-hidden="true"
+              className="absolute -right-14 -top-16 size-56 rounded-full bg-accent/15 blur-2xl"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute -bottom-20 -left-12 size-64 rounded-full bg-primary/15 blur-3xl"
+            />
+            <span
+              aria-hidden="true"
+              className="absolute -right-5 top-8 select-none text-[10rem] leading-none font-black tracking-[-0.12em] text-primary/[0.045] sm:text-[13rem]"
+            >
+              AP
+            </span>
+
+            <Image
+              src={mediaConfig.doctorPortrait.src}
+              alt={
+                mediaConfig.doctorPortrait.isPlaceholder
+                  ? ""
+                  : mediaConfig.doctorPortrait.alt
+              }
+              fill
+              priority
+              sizes="(max-width: 1023px) 92vw, 46vw"
+              className="object-contain object-bottom"
+            />
+
+            {mediaConfig.doctorPortrait.isPlaceholder ? (
+              <div
+                className="absolute inset-0 grid place-items-center p-8 text-center"
+                role="img"
+                aria-label="Reserved space for the approved portrait of Dr. Ashok A. Patil"
+              >
+                <div>
+                  <span className="mx-auto grid size-28 place-items-center rounded-[2rem] border border-primary/15 bg-surface/70 text-primary shadow-card backdrop-blur-md sm:size-36">
+                    <UserRound aria-hidden="true" className="size-14 sm:size-16" />
+                  </span>
+                  <p className="mt-5 text-sm font-extrabold text-primary-dark">
+                    Doctor portrait reserved
+                  </p>
+                  <p className="mt-1 text-xs font-semibold text-muted">
+                    Ready for the approved photograph
+                  </p>
+                </div>
+              </div>
+            ) : null}
+
+            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-primary-dark/20 to-transparent" />
+            <div className="absolute bottom-5 left-5 right-5 flex items-center gap-3 rounded-[1.1rem] border border-surface/70 bg-surface/88 p-3.5 shadow-card backdrop-blur-xl sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-xs">
+              <span className="grid size-10 shrink-0 place-items-center rounded-control bg-soft-accent text-primary-dark">
+                <HeartHandshake aria-hidden="true" className="size-5" />
+              </span>
+              <p className="text-xs leading-5 font-semibold text-text sm:text-sm">
+                Trusted by local families across generations
+              </p>
+            </div>
+          </div>
+
+          <div className="relative z-10 -mt-4 ml-4 grid max-w-md grid-cols-2 gap-2.5 sm:-mt-6 sm:ml-7 sm:gap-3">
+            <div className="rounded-[1.15rem] border border-border bg-surface p-4 shadow-card sm:p-5">
+              <p className="text-2xl font-extrabold tracking-[-0.04em] text-primary-dark sm:text-3xl">
+                28
+              </p>
+              <p className="mt-1 text-xs leading-5 font-semibold text-muted sm:text-sm">
+                Years of clinical experience
+              </p>
+            </div>
+            <div className="rounded-[1.15rem] border border-border bg-primary-dark p-4 text-surface shadow-card sm:p-5">
+              <p className="text-sm font-extrabold sm:text-base">Family practice</p>
+              <p className="mt-1 text-xs leading-5 text-surface/70 sm:text-sm">
+                Shani Peth, Jalgaon
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
         <motion.div
           className="relative z-10 max-w-3xl"
           initial="hidden"
@@ -144,98 +236,6 @@ export function Hero() {
               approach to everyday and ongoing healthcare.
             </p>
           </motion.div>
-        </motion.div>
-
-        <motion.div
-          className="relative mx-auto w-full max-w-xl lg:max-w-none"
-          initial={{
-            opacity: 0,
-            scale: 0.985,
-            y: 12,
-          }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{
-            duration: 0.62,
-            delay: 0.18,
-            ease: motionEasing.standard,
-          }}
-        >
-          <div className="relative isolate min-h-[27rem] overflow-hidden rounded-[2rem_2rem_4.5rem_2rem] border border-primary/10 bg-soft-accent shadow-[0_1.5rem_4rem_var(--shadow-color)] sm:min-h-[34rem] lg:min-h-[37rem]">
-            <div
-              aria-hidden="true"
-              className="absolute -right-14 -top-16 size-56 rounded-full bg-accent/15 blur-2xl"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute -bottom-20 -left-12 size-64 rounded-full bg-primary/15 blur-3xl"
-            />
-            <span
-              aria-hidden="true"
-              className="absolute -right-5 top-8 select-none text-[10rem] leading-none font-black tracking-[-0.12em] text-primary/[0.045] sm:text-[13rem]"
-            >
-              AP
-            </span>
-
-            <Image
-              src={mediaConfig.doctorPortrait.src}
-              alt={
-                mediaConfig.doctorPortrait.isPlaceholder
-                  ? ""
-                  : mediaConfig.doctorPortrait.alt
-              }
-              fill
-              priority
-              sizes="(max-width: 1023px) 92vw, 46vw"
-              className="object-contain object-bottom"
-            />
-
-            {mediaConfig.doctorPortrait.isPlaceholder ? (
-              <div
-                className="absolute inset-0 grid place-items-center p-8 text-center"
-                role="img"
-                aria-label="Reserved space for the approved portrait of Dr. Ashok A. Patil"
-              >
-                <div>
-                  <span className="mx-auto grid size-28 place-items-center rounded-[2rem] border border-primary/15 bg-surface/70 text-primary shadow-card backdrop-blur-md sm:size-36">
-                    <UserRound aria-hidden="true" className="size-14 sm:size-16" />
-                  </span>
-                  <p className="mt-5 text-sm font-extrabold text-primary-dark">
-                    Doctor portrait reserved
-                  </p>
-                  <p className="mt-1 text-xs font-semibold text-muted">
-                    Ready for the approved photograph
-                  </p>
-                </div>
-              </div>
-            ) : null}
-
-            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-primary-dark/20 to-transparent" />
-            <div className="absolute bottom-5 left-5 right-5 flex items-center gap-3 rounded-[1.1rem] border border-surface/70 bg-surface/88 p-3.5 shadow-card backdrop-blur-xl sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-xs">
-              <span className="grid size-10 shrink-0 place-items-center rounded-control bg-soft-accent text-primary-dark">
-                <HeartHandshake aria-hidden="true" className="size-5" />
-              </span>
-              <p className="text-xs leading-5 font-semibold text-text sm:text-sm">
-                Trusted by local families across generations
-              </p>
-            </div>
-          </div>
-
-          <div className="relative z-10 -mt-4 ml-4 grid max-w-md grid-cols-2 gap-2.5 sm:-mt-6 sm:ml-7 sm:gap-3">
-            <div className="rounded-[1.15rem] border border-border bg-surface p-4 shadow-card sm:p-5">
-              <p className="text-2xl font-extrabold tracking-[-0.04em] text-primary-dark sm:text-3xl">
-                28
-              </p>
-              <p className="mt-1 text-xs leading-5 font-semibold text-muted sm:text-sm">
-                Years of clinical experience
-              </p>
-            </div>
-            <div className="rounded-[1.15rem] border border-border bg-primary-dark p-4 text-surface shadow-card sm:p-5">
-              <p className="text-sm font-extrabold sm:text-base">Family practice</p>
-              <p className="mt-1 text-xs leading-5 text-surface/70 sm:text-sm">
-                Shani Peth, Jalgaon
-              </p>
-            </div>
-          </div>
         </motion.div>
       </div>
     </section>

@@ -1,8 +1,6 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
 import {
   AirVent,
   Armchair,
@@ -14,14 +12,14 @@ import {
   MessageSquareText,
   Navigation,
   ShieldCheck,
-  Sparkles,
   Store,
   Stethoscope,
   UsersRound,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { clinicConfig } from "@/config/clinic";
-import { mediaConfig } from "@/config/media";
+import { clinicImageNotice } from "@/config/clinic-images";
+import { ClinicGallery } from "./clinic-gallery";
 import {
   motionDuration,
   motionEasing,
@@ -29,15 +27,6 @@ import {
   motionScale,
   motionStagger,
 } from "@/lib/motion";
-
-type ClinicAsset = (typeof mediaConfig.clinicGallery)[number];
-
-type GalleryFrameProps = {
-  asset: ClinicAsset;
-  icon: LucideIcon;
-  layout: "feature" | "support" | "wide";
-  reference: string;
-};
 
 const revealVariants = {
   hidden: { opacity: 0, y: motionOffset.revealY },
@@ -84,123 +73,44 @@ const clinicSpaces = [
   },
 ] as const;
 
-const galleryPresentation = {
-  "consultation-cabin": {
-    icon: Building2,
-    layout: "feature",
-    reference: "01",
-  },
-  "treatment-area": {
-    icon: BedSingle,
-    layout: "support",
-    reference: "02",
-  },
-  "waiting-area": {
-    icon: Armchair,
-    layout: "support",
-    reference: "03",
-  },
-  "clinic-environment": {
-    icon: Sparkles,
-    layout: "wide",
-    reference: "04",
-  },
-} satisfies Record<
-  ClinicAsset["key"],
-  Omit<GalleryFrameProps, "asset">
->;
-
-const galleryItems = mediaConfig.clinicGallery.map((asset) => ({
-  asset,
-  ...galleryPresentation[asset.key],
-}));
-
-function GalleryFrame({
-  asset,
-  icon: Icon,
-  layout,
-  reference,
-}: GalleryFrameProps) {
-  const layoutClass =
-    layout === "feature"
-      ? "col-span-2 min-h-[24rem] lg:col-span-7 lg:row-span-3 lg:min-h-0"
-      : layout === "wide"
-        ? "col-span-2 min-h-[15rem] lg:col-span-5 lg:row-span-1 lg:min-h-0"
-        : "col-span-1 min-h-[16rem] lg:col-span-5 lg:row-span-1 lg:min-h-0";
-
-  return (
-    <motion.figure
-      variants={revealVariants}
-      className={`group relative isolate overflow-hidden rounded-[var(--radius-card)] border border-primary/15 bg-surface-muted shadow-standard transition-shadow duration-300 hover:shadow-featured ${layoutClass}`}
-      whileHover={{ y: motionOffset.hoverLiftY }}
-      whileTap={{ scale: motionScale.press }}
-    >
-      {asset.src ? (
-        <Image
-          src={asset.src}
-          alt={asset.alt}
-          fill
-          sizes={
-            layout === "feature"
-              ? "(max-width: 1023px) 92vw, 58vw"
-              : "(max-width: 639px) 46vw, (max-width: 1023px) 92vw, 42vw"
-          }
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.025]"
-        />
-      ) : (
-        <div
-          className="absolute inset-0 overflow-hidden bg-[radial-gradient(circle_at_78%_18%,var(--surface),transparent_34%),linear-gradient(145deg,var(--soft-accent),var(--surface-muted))]"
-          role="img"
-          aria-label={`Reserved frame for a real photograph of the ${asset.label.toLowerCase()}`}
-        >
-          <span className="absolute top-5 left-5 text-[0.65rem] font-extrabold tracking-[0.14em] text-primary/65 uppercase sm:top-6 sm:left-6">
-            Clinic space · {reference}
-          </span>
-          <Icon
-            aria-hidden="true"
-            className={`absolute text-primary/10 ${
-              layout === "feature"
-                ? "right-8 bottom-20 size-40 sm:size-52"
-                : "right-4 bottom-20 size-24 sm:size-28"
-            }`}
-            strokeWidth={1.2}
-          />
-          <span
-            aria-hidden="true"
-            className="absolute top-0 bottom-0 left-[18%] w-px bg-primary/10"
-          />
-          <span
-            aria-hidden="true"
-            className="absolute top-[32%] right-0 left-0 h-px bg-primary/10"
-          />
-        </div>
-      )}
-
-      {asset.src ? (
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-primary-dark/80 to-transparent"
-        />
-      ) : null}
-
-      <figcaption className="absolute inset-x-3 bottom-3 rounded-[0.9rem] border border-surface/70 bg-surface/92 p-3.5 shadow-standard backdrop-blur-md sm:inset-x-4 sm:bottom-4 sm:p-4">
-        <p className="text-sm font-extrabold text-primary-dark sm:text-base">
-          {asset.label}
-        </p>
-        <p className="mt-1 text-[0.68rem] leading-4 font-semibold text-muted sm:text-xs sm:leading-5">
-          {asset.detail}
-        </p>
-      </figcaption>
-    </motion.figure>
-  );
-}
-
 export function ClinicPageContent() {
   return (
     <>
       <section
+        aria-labelledby="clinic-gallery-heading"
+        className="relative overflow-hidden bg-surface pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pb-24"
+      >
+        <div className="site-container">
+          <motion.div
+            className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.28 }}
+            variants={revealVariants}
+          >
+            <div>
+              <p className="text-xs font-extrabold tracking-[0.12em] text-primary uppercase">
+                Clinic gallery
+              </p>
+              <h1
+                id="clinic-gallery-heading"
+                className="mt-4 max-w-[14ch] font-display text-3xl leading-[1.08] font-[750] tracking-[-0.045em] text-text sm:text-4xl lg:text-[2.9rem]"
+              >
+                A closer look at the spaces patients use.
+              </h1>
+            </div>
+            <p className="max-w-md text-sm leading-6 text-muted sm:text-base sm:leading-7 lg:text-right">
+              {clinicImageNotice}
+            </p>
+          </motion.div>
+
+          <ClinicGallery />
+        </div>
+      </section>
+
+      <section
         aria-labelledby="clinic-page-heading"
-        className="relative isolate overflow-hidden bg-background pt-28 pb-14 sm:pt-32 sm:pb-16 lg:pb-20"
+        className="relative isolate overflow-hidden bg-background pt-16 pb-14 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20"
       >
         <div
           aria-hidden="true"
@@ -227,13 +137,13 @@ export function ClinicPageContent() {
               <span className="h-px w-8 bg-accent" aria-hidden="true" />
               The Clinic
             </motion.p>
-            <motion.h1
+            <motion.h2
               id="clinic-page-heading"
               variants={revealVariants}
               className="mt-5 max-w-[15ch] font-display text-[clamp(2.55rem,10vw,3.8rem)] leading-[1.01] font-[750] tracking-[-0.055em] text-text lg:text-[clamp(3.4rem,4.8vw,4.45rem)]"
             >
               A familiar practice, built for comfortable care.
-            </motion.h1>
+            </motion.h2>
             <motion.p
               variants={revealVariants}
               className="mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg sm:leading-8"
@@ -498,57 +408,6 @@ export function ClinicPageContent() {
         </div>
       </section>
 
-      <section
-        aria-labelledby="clinic-gallery-heading"
-        className="relative overflow-hidden bg-surface py-16 sm:py-20 lg:py-24"
-      >
-        <div className="site-container">
-          <motion.div
-            className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.28 }}
-            variants={revealVariants}
-          >
-            <div>
-              <p className="text-xs font-extrabold tracking-[0.12em] text-primary uppercase">
-                Clinic gallery
-              </p>
-              <h2
-                id="clinic-gallery-heading"
-                className="mt-4 max-w-[14ch] font-display text-3xl leading-[1.08] font-[750] tracking-[-0.045em] text-text sm:text-4xl lg:text-[2.9rem]"
-              >
-                A closer look at the spaces patients use.
-              </h2>
-            </div>
-            <p className="max-w-md text-sm leading-6 text-muted sm:text-base sm:leading-7 lg:text-right">
-              These frames are ready for verified clinic photography as soon as
-              the final images are approved.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-12 lg:grid-rows-[repeat(3,minmax(12rem,1fr))]"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.05 }}
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: motionStagger.cards } },
-            }}
-          >
-            {galleryItems.map((item) => (
-              <GalleryFrame
-                key={item.asset.key}
-                asset={item.asset}
-                icon={item.icon}
-                layout={item.layout}
-                reference={item.reference}
-              />
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
       <section
         aria-labelledby="clinic-practical-heading"

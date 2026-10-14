@@ -57,19 +57,14 @@ export function MobileActionBar() {
             ease: motionEasing.standard,
           }}
         >
-          <button
-            type="button"
-            disabled
-            title="Phone number will be added once confirmed"
-            aria-describedby="mobile-call-pending"
-            className="relative flex min-h-13 cursor-not-allowed flex-col items-center justify-center gap-1 rounded-[var(--radius-control)] bg-transparent px-2 text-[0.7rem] font-extrabold text-muted opacity-65 after:absolute after:inset-y-2.5 after:-right-0.5 after:w-px after:bg-border"
+          <a
+            href={clinicConfig.phone.href}
+            aria-label={`Call the clinic on ${clinicConfig.phone.display}`}
+            className="relative flex min-h-13 flex-col items-center justify-center gap-1 rounded-[var(--radius-control)] bg-transparent px-2 text-[0.7rem] font-extrabold text-primary transition-[background-color,color] duration-200 after:absolute after:inset-y-2.5 after:-right-0.5 after:w-px after:bg-border hover:bg-accent-soft focus-visible:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 focus-visible:ring-offset-1 focus-visible:ring-offset-surface active:bg-accent-soft"
           >
             <Phone aria-hidden="true" className="size-[1.1rem]" />
             Call
-          </button>
-          <span id="mobile-call-pending" className="sr-only">
-            Phone number will be added once confirmed.
-          </span>
+          </a>
           <motion.a
             href="#enquiry"
             className="flex min-h-13 flex-col items-center justify-center gap-1 rounded-[var(--radius-control)] bg-transparent px-2 text-[0.7rem] font-extrabold text-primary transition-[background-color,color] duration-200 focus-visible:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 focus-visible:ring-offset-1 focus-visible:ring-offset-surface active:bg-accent-soft"

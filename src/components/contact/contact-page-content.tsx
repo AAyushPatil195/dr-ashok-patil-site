@@ -5,7 +5,6 @@ import {
   Clock3,
   Landmark,
   MapPin,
-  MessageCircle,
   MessageSquareText,
   Navigation,
   Phone,
@@ -269,27 +268,17 @@ export function ContactPageContent() {
               <p className="text-xs font-extrabold tracking-[0.1em] text-muted uppercase">
                 Direct contact
               </p>
-              <div className="mt-3 grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  disabled
-                  className="flex min-h-12 cursor-not-allowed items-center justify-center gap-2 rounded-[var(--radius-control)] border border-border bg-surface-muted px-3 text-xs font-extrabold text-muted opacity-70"
+              <div className="mt-3">
+                <a
+                  href={clinicConfig.phone.href}
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-control)] bg-primary px-4 text-sm font-extrabold text-surface shadow-standard transition-colors duration-200 hover:bg-primary-dark focus-visible:outline-offset-4 active:bg-primary-dark"
                 >
                   <Phone aria-hidden="true" className="size-4" />
-                  Call coming soon
-                </button>
-                <button
-                  type="button"
-                  disabled
-                  className="flex min-h-12 cursor-not-allowed items-center justify-center gap-2 rounded-[var(--radius-control)] border border-border bg-surface-muted px-3 text-xs font-extrabold text-muted opacity-70"
-                >
-                  <MessageCircle aria-hidden="true" className="size-4" />
-                  WhatsApp coming soon
-                </button>
+                  Call {clinicConfig.phone.display}
+                </a>
               </div>
               <p className="mt-3 text-xs leading-5 text-muted">
-                Verified clinic phone and WhatsApp details will be added once
-                finalized.
+                Calls are available. WhatsApp is not supported on this number.
               </p>
             </motion.div>
           </motion.div>

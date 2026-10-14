@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Clock3, MapPin, MessageSquareText } from "lucide-react";
+import { Clock3, MapPin, MessageSquareText, Phone } from "lucide-react";
 import { clinicConfig } from "@/config/clinic";
 
 const footerLinks = [
@@ -93,6 +93,13 @@ export function SiteFooter() {
             <p className="mt-3 text-sm leading-6 text-surface/68">
               Send an appointment or general enquiry through the website form.
             </p>
+            <a
+              href={clinicConfig.phone.href}
+              className="mt-2 inline-flex min-h-11 items-center gap-2 rounded-control text-sm font-semibold text-surface/80 transition-colors hover:text-surface focus-visible:outline-offset-4 active:text-surface"
+            >
+              <Phone aria-hidden="true" className="size-4 shrink-0 text-accent" />
+              {clinicConfig.phone.display}
+            </a>
             <Link
               href="/#enquiry"
               className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-control bg-surface px-4 text-sm font-extrabold text-primary-dark shadow-standard transition-[transform,background-color] hover:-translate-y-0.5 hover:bg-soft-accent active:translate-y-0"

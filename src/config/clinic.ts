@@ -1,4 +1,11 @@
+const clinicPhoneNumber = "+919405963994";
+
 export const clinicConfig = {
+  phone: {
+    number: clinicPhoneNumber,
+    display: "+91 94059 63994",
+    href: `tel:${clinicPhoneNumber}`,
+  },
   addressLines: [
     "B1/1019, Shani Peth, Kinara",
     "Jalgaon, Maharashtra 425001",

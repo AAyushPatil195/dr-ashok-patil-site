@@ -7,6 +7,7 @@ import {
   Landmark,
   MapPin,
   Navigation,
+  Phone,
 } from "lucide-react";
 import { clinicConfig } from "@/config/clinic";
 import {
@@ -109,8 +110,15 @@ export function VisitSection() {
               />
             </motion.a>
 
-            <p className="mt-4 text-xs leading-5 text-muted">
-              Phone and WhatsApp details will be added once confirmed.
+            <a
+              href={clinicConfig.phone.href}
+              className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-control text-sm font-extrabold text-primary transition-colors duration-200 hover:text-primary-dark focus-visible:outline-offset-4 active:text-primary-dark"
+            >
+              <Phone aria-hidden="true" className="size-4" />
+              Call {clinicConfig.phone.display}
+            </a>
+            <p className="mt-1 text-xs leading-5 text-muted">
+              Calls only. WhatsApp is not supported on this number.
             </p>
           </motion.div>
 

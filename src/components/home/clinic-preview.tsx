@@ -2,18 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import type { LucideIcon } from "lucide-react";
-import {
-  Armchair,
-  ArrowRight,
-  BedSingle,
-  Building2,
-  ShieldCheck,
-  Store,
-  UsersRound,
-} from "lucide-react";
+import { ArrowRight, ShieldCheck, Store, UsersRound } from "lucide-react";
 import { motion } from "motion/react";
-import { mediaConfig } from "@/config/media";
+import {
+  clinicPreviewImages,
+  clinicImageNotice,
+  type ClinicImage,
+} from "@/config/clinic-images";
 import {
   motionDuration,
   motionEasing,
@@ -22,12 +17,9 @@ import {
   motionStagger,
 } from "@/lib/motion";
 
-type ClinicAsset = (typeof mediaConfig.clinicGallery)[number];
-
 type ClinicImageCardProps = {
-  asset: ClinicAsset;
+  asset: ClinicImage;
   feature?: boolean;
-  icon: LucideIcon;
 };
 
 const revealVariants = {
@@ -42,7 +34,7 @@ const revealVariants = {
   },
 };
 
-function ClinicImageCard({ asset, feature = false, icon: Icon }: ClinicImageCardProps) {
+function ClinicImageCard({ asset, feature = false }: ClinicImageCardProps) {
   return (
     <motion.figure
       variants={revealVariants}
@@ -54,41 +46,24 @@ function ClinicImageCard({ asset, feature = false, icon: Icon }: ClinicImageCard
           : "col-span-1 min-h-[14rem] sm:min-h-[17rem] lg:col-span-5 lg:min-h-0"
       }`}
     >
-      {asset.src ? (
-        <Image
-          src={asset.src}
-          alt={asset.alt}
-          fill
-          sizes={
-            feature
-              ? "(max-width: 1023px) 92vw, 58vw"
-              : "(max-width: 639px) 46vw, (max-width: 1023px) 46vw, 42vw"
-          }
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.025]"
-        />
-      ) : (
-        <div
-          className="absolute inset-0 grid place-items-center bg-surface-muted p-5 text-center"
-          role="img"
-          aria-label={`${asset.label} photograph ready to add`}
-        >
-          <div>
-            <span className="mx-auto grid size-12 place-items-center rounded-[1rem] border border-primary/15 bg-surface text-primary shadow-standard sm:size-14">
-              <Icon aria-hidden="true" className="size-6" />
-            </span>
-            <p className="mt-3 text-xs font-extrabold text-primary-dark sm:text-sm">
-              Real clinic photo ready to add
-            </p>
-          </div>
-        </div>
-      )}
+      <Image
+        src={asset.src}
+        alt={asset.alt}
+        fill
+        loading="lazy"
+        sizes={
+          feature
+            ? "(max-width: 1023px) 92vw, (max-width: 1279px) 54vw, 700px"
+            : "(max-width: 1023px) 44vw, (max-width: 1279px) 38vw, 492px"
+        }
+        style={{ objectPosition: asset.objectPosition }}
+        className="object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.025]"
+      />
 
-      {asset.src ? (
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-primary-dark/80 to-transparent"
-        />
-      ) : null}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-primary-dark/80 to-transparent"
+      />
 
       <figcaption className="absolute inset-x-3 bottom-3 rounded-[0.9rem] border border-surface/70 bg-surface/90 p-3 shadow-standard backdrop-blur-md sm:inset-x-4 sm:bottom-4 sm:p-4">
         <p className="text-xs font-extrabold text-primary-dark sm:text-sm">
@@ -101,12 +76,6 @@ function ClinicImageCard({ asset, feature = false, icon: Icon }: ClinicImageCard
     </motion.figure>
   );
 }
-
-const galleryItems = [
-  { asset: mediaConfig.clinicGallery[0], icon: Building2, feature: true },
-  { asset: mediaConfig.clinicGallery[1], icon: BedSingle },
-  { asset: mediaConfig.clinicGallery[2], icon: Armchair },
-] as const;
 
 const clinicDetails = [
   { icon: UsersRound, text: "Three clinic staff" },
@@ -161,15 +130,15 @@ export function ClinicPreview() {
             },
           }}
         >
-          {galleryItems.map((item) => (
+          {clinicPreviewImages.map((asset, index) => (
             <ClinicImageCard
-              key={item.asset.key}
-              asset={item.asset}
-              icon={item.icon}
-              feature={"feature" in item ? item.feature : false}
+              key={asset.key}
+              asset={asset}
+              feature={index === 0}
             />
           ))}
         </motion.div>
+        <p className="mt-3 text-xs leading-5 text-muted">{clinicImageNotice}</p>
 
         <motion.ul
           className="mt-6 grid list-none border-y border-border p-0 sm:grid-cols-3"
