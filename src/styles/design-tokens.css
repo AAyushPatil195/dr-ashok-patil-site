@@ -76,6 +76,20 @@
   --gallery-lead-desktop-ratio: 2 / 1;
   --gallery-editorial-wide-ratio: 16 / 6;
   --gallery-backdrop: color-mix(in srgb, var(--text) 92%, transparent);
+  --clinic-collage-tablet-height: 22rem;
+  --clinic-collage-desktop-height: clamp(26rem, 32vw, 31rem);
+  --clinic-filter-width: 22rem;
+  --clinic-filter-menu-height: min(20rem, 45dvh);
+  --clinic-preview-mobile-height: 22rem;
+  --clinic-preview-caption-surface: color-mix(in srgb, var(--surface) 88%, transparent);
+  --clinic-preview-caption-border: color-mix(in srgb, var(--surface) 55%, transparent);
+  --clinic-preview-caption-padding: 0.625rem;
+  --clinic-preview-gradient-height: 5rem;
+  --clinic-preview-gradient: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--primary-dark) 28%, transparent),
+    transparent
+  );
 }
 
 /*

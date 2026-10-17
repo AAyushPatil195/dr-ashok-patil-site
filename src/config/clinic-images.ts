@@ -173,7 +173,25 @@ export const clinicImages = [
 ] as const satisfies readonly ClinicImage[];
 
 export const clinicPreviewImages: readonly ClinicImage[] = [
-  clinicImages[0],
+  {
+    ...clinicImages[0],
+    detail: "A dedicated space for personal consultations.",
+  },
+  {
+    ...clinicImages[2],
+    detail: "Dedicated space for IV and saline care.",
+  },
+  {
+    ...clinicImages[3],
+    detail: "Comfortable seating for patients and families.",
+  },
+];
+
+// Different angles from the gallery's opening photographs keep the introduction
+// distinct. The additional examination view joins the composition on desktop.
+export const clinicCollageImages: readonly ClinicImage[] = [
+  clinicImages[4],
+  clinicImages[5],
   clinicImages[2],
-  clinicImages[3],
+  clinicImages[8],
 ];

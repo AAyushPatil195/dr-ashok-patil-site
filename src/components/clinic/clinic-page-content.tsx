@@ -20,6 +20,7 @@ import { motion } from "motion/react";
 import { clinicConfig } from "@/config/clinic";
 import { clinicImageNotice } from "@/config/clinic-images";
 import { ClinicGallery } from "./clinic-gallery";
+import { ClinicCollage } from "./clinic-collage";
 import {
   motionDuration,
   motionEasing,
@@ -81,6 +82,7 @@ export function ClinicPageContent() {
         className="relative overflow-hidden bg-surface pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pb-24"
       >
         <div className="site-container">
+          <ClinicCollage />
           <motion.div
             className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between"
             initial="hidden"

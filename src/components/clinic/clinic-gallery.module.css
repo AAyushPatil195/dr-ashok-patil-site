@@ -1,15 +1,29 @@
+.filterWrapper {
+  width: min(100%, var(--clinic-filter-width));
+  margin-top: var(--space-8);
+}
+
+.filterLabel {
+  margin-bottom: var(--space-2);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
 .filter {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  min-height: 44px;
-  padding: var(--space-2) var(--space-4);
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 52px;
+  padding: var(--space-3) var(--space-4);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-control);
   background: var(--surface);
   color: var(--primary-dark);
-  font-size: 0.75rem;
+  box-shadow: var(--depth-standard);
+  font-size: 0.8125rem;
+  text-align: left;
   font-weight: 750;
   cursor: pointer;
   transition: background var(--motion-duration-fast), border-color var(--motion-duration-fast);
@@ -20,10 +34,70 @@
   background: var(--soft-accent);
 }
 
-.filter[aria-pressed="true"] {
-  border-color: var(--primary-dark);
-  background: var(--primary-dark);
-  color: var(--surface);
+.filter[aria-expanded="true"] {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.filterValue {
+  min-width: 0;
+  flex: 1;
+}
+
+.chevron {
+  transition: transform var(--motion-duration-fast);
+}
+
+.filter[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+.menuReveal {
+  overflow: hidden;
+}
+
+.menu {
+  max-height: var(--clinic-filter-menu-height);
+  overflow-y: auto;
+  margin-top: var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  overscroll-behavior: contain;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2);
+  border-radius: var(--radius-control);
+  color: var(--primary-dark);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--motion-duration-fast);
+}
+
+.option:hover,
+.option:active,
+.option[aria-checked="true"] {
+  background: var(--soft-accent);
+}
+
+.option:focus-visible {
+  outline-offset: -3px;
+}
+
+.optionCheck {
+  display: grid;
+  width: 1rem;
+  flex-shrink: 0;
+  place-items: center;
 }
 
 .filter:active,
@@ -289,6 +363,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .chevron,
+  .option,
+  .filter {
+    transition: none;
+  }
+
   .filter:active,
   .control:active {
     transform: none;

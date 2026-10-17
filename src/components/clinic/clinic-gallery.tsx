@@ -8,12 +8,10 @@ import {
   clinicImageCategories,
   clinicImages,
   clinicImageNotice,
-  type ClinicImageCategory,
 } from "@/config/clinic-images";
 import { motionDuration, motionEasing, motionOffset } from "@/lib/motion";
+import { ClinicSpaceFilter, type GalleryCategory } from "./clinic-space-filter";
 import styles from "./clinic-gallery.module.css";
-
-type GalleryCategory = ClinicImageCategory | "all";
 
 export function ClinicGallery() {
   const [category, setCategory] = useState<GalleryCategory>("all");
@@ -61,28 +59,7 @@ export function ClinicGallery() {
 
   return (
     <>
-      <div className="mt-8 flex flex-wrap gap-2" role="group" aria-label="Filter clinic photographs">
-        {[
-          { key: "all" as const, label: "All spaces" },
-          ...clinicImageCategories,
-        ].map((item) => (
-          <button
-            key={item.key}
-            type="button"
-            aria-pressed={category === item.key}
-            aria-controls="clinic-photo-collection"
-            className={styles.filter}
-            onClick={() => setCategory(item.key)}
-          >
-            {item.label}
-            <span className={styles.count}>
-              {item.key === "all"
-                ? clinicImages.length
-                : clinicImages.filter((image) => image.category === item.key).length}
-            </span>
-          </button>
-        ))}
-      </div>
+      <ClinicSpaceFilter category={category} onChange={setCategory} />
       <p className="mt-4 text-xs leading-5 text-muted" role="status">
         {images.length} {images.length === 1 ? "image" : "images"} · Select a photograph to view it in full.
       </p>

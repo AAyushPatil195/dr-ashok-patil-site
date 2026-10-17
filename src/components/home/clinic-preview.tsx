@@ -42,7 +42,7 @@ function ClinicImageCard({ asset, feature = false }: ClinicImageCardProps) {
       whileTap={{ scale: motionScale.press }}
       className={`group relative isolate overflow-hidden rounded-[var(--radius-card)] border border-primary/15 bg-surface-muted shadow-standard transition-shadow duration-300 hover:shadow-featured ${
         feature
-          ? "col-span-2 min-h-[25rem] lg:col-span-7 lg:row-span-2 lg:min-h-[37rem]"
+          ? "col-span-2 min-h-[var(--clinic-preview-mobile-height)] lg:col-span-7 lg:row-span-2 lg:min-h-[37rem]"
           : "col-span-1 min-h-[14rem] sm:min-h-[17rem] lg:col-span-5 lg:min-h-0"
       }`}
     >
@@ -62,14 +62,14 @@ function ClinicImageCard({ asset, feature = false }: ClinicImageCardProps) {
 
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-primary-dark/80 to-transparent"
+        className="absolute inset-x-0 bottom-0 h-[var(--clinic-preview-gradient-height)] bg-[image:var(--clinic-preview-gradient)]"
       />
 
-      <figcaption className="absolute inset-x-3 bottom-3 rounded-[0.9rem] border border-surface/70 bg-surface/90 p-3 shadow-standard backdrop-blur-md sm:inset-x-4 sm:bottom-4 sm:p-4">
+      <figcaption className="absolute inset-x-3 bottom-3 rounded-[var(--radius-control)] border border-[var(--clinic-preview-caption-border)] bg-[var(--clinic-preview-caption-surface)] px-3 py-2 shadow-standard backdrop-blur-md sm:inset-x-4 sm:bottom-4 sm:py-[var(--clinic-preview-caption-padding)]">
         <p className="text-xs font-extrabold text-primary-dark sm:text-sm">
           {asset.label}
         </p>
-        <p className="mt-1 text-[0.65rem] leading-4 font-semibold text-muted sm:text-xs sm:leading-5">
+        <p className="mt-1 text-[0.65rem] leading-4 font-semibold text-text sm:text-xs sm:leading-5">
           {asset.detail}
         </p>
       </figcaption>
@@ -94,7 +94,7 @@ export function ClinicPreview() {
     >
       <div id="clinic" className="site-container">
         <motion.div
-          className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"
+          className="flex flex-col gap-6 lg:grid lg:max-w-5xl lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-end lg:gap-[var(--space-12)]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
@@ -112,7 +112,7 @@ export function ClinicPreview() {
               Designed for comfortable, practical care.
             </h2>
           </div>
-          <p className="max-w-md text-sm leading-6 text-muted sm:text-base sm:leading-7 lg:text-right">
+          <p className="max-w-md text-sm leading-6 text-muted sm:text-base sm:leading-7">
             Purposeful spaces for consultation, treatment and comfortable
             waiting, with a focus on hygiene and practical patient care.
           </p>
