@@ -1,6 +1,8 @@
 import { Resend } from "resend";
 import { enquirySchema } from "@/lib/enquiry-schema";
 
+export const runtime = "nodejs";
+
 type EnquiryResponse = {
   success: boolean;
   message: string;
@@ -44,14 +46,14 @@ export async function POST(request: Request) {
 
   const enquiry = parsed.data;
 
-  // Quietly accept honeypot submissions so automated senders receive no signal.
+  // Reject the honeypot without ever claiming an unsent enquiry succeeded.
   if (enquiry.website) {
     return jsonResponse(
       {
-        success: true,
-        message: "Thank you. Your enquiry has been received.",
+        success: false,
+        message: "We could not send this enquiry. Please check the form and try again.",
       },
-      200,
+      422,
     );
   }
 
@@ -85,7 +87,7 @@ export async function POST(request: Request) {
 
   try {
     const resend = new Resend(apiKey);
-    const { error } = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: fromAddress,
       to: [destinationAddress],
       subject: "New website appointment / enquiry request",
@@ -93,8 +95,8 @@ export async function POST(request: Request) {
       text: emailBody,
     });
 
-    if (error) {
-      console.error("Resend could not deliver an enquiry email:", error.name);
+    if (error || !data?.id) {
+      console.error("Resend did not accept an enquiry email:", error?.name ?? "MissingEmailId");
       return jsonResponse(
         {
           success: false,
@@ -109,7 +111,7 @@ export async function POST(request: Request) {
       {
         success: true,
         message:
-          "Thank you. Your enquiry has been sent. The clinic will respond when available.",
+          "Thank you. Your enquiry has been submitted for email delivery. The clinic will respond when available.",
       },
       200,
     );

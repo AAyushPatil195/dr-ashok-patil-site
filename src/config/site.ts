@@ -1,5 +1,4 @@
 export const siteConfig = {
-  url: "https://drashokpatil.com",
   name: "Dr. Ashok A. Patil",
   title: "Dr. Ashok A. Patil | General Practitioner in Jalgaon",
   description:

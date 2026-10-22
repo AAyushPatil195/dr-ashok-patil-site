@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { MessageSquareText } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -19,10 +20,18 @@ const focusableSelector =
   'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export function SiteHeader() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openMenuPathname, setOpenMenuPathname] = useState<string | null>(null);
+  const isMenuOpen = openMenuPathname === pathname;
+  const navigationRef = useRef<HTMLDivElement>(null);
   const menuPanelRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Do not reopen an old menu when browser history returns to its route.
+  if (openMenuPathname !== null && openMenuPathname !== pathname) {
+    setOpenMenuPathname(null);
+  }
 
   useEffect(() => {
     let animationFrame: number | undefined;
@@ -54,31 +63,51 @@ export function SiteHeader() {
     if (!isMenuOpen) return;
 
     const panel = menuPanelRef.current;
+    const navigation = navigationRef.current;
+    if (!panel || !navigation) return;
+
     const previousOverflow = document.body.style.overflow;
+    const previousRootOverflow = document.documentElement.style.overflow;
     const previousFocus = document.activeElement as HTMLElement | null;
+    const background = Array.from(
+      document.querySelectorAll<HTMLElement>("#main-content, #site-footer, .skip-link"),
+    ).map((element) => ({ element, inert: element.inert }));
+    const desktopQuery = window.matchMedia("(min-width: 64rem)");
 
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    background.forEach(({ element }) => {
+      element.inert = true;
+    });
+    panel.inert = false;
 
-    const focusFrame = window.requestAnimationFrame(() => panel?.focus());
+    const focusFrame = window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+    const closeOnDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setOpenMenuPathname(null);
+    };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setIsMenuOpen(false);
+        event.preventDefault();
+        setOpenMenuPathname(null);
         return;
       }
 
-      if (event.key !== "Tab" || !panel) return;
+      if (event.key !== "Tab") return;
 
       const focusableElements = Array.from(
-        panel.querySelectorAll<HTMLElement>(focusableSelector),
-      );
+        navigation.querySelectorAll<HTMLElement>(focusableSelector),
+      ).filter((element) => element.getClientRects().length > 0 && !element.closest("[inert]"));
 
       if (focusableElements.length === 0) return;
 
       const firstElement = focusableElements[0];
       const lastElement = focusableElements.at(-1);
 
-      if (event.shiftKey && document.activeElement === panel) {
+      if (!navigation.contains(document.activeElement)) {
+        event.preventDefault();
+        menuButtonRef.current?.focus();
+      } else if (event.shiftKey && document.activeElement === panel) {
         event.preventDefault();
         lastElement?.focus();
       } else if (event.shiftKey && document.activeElement === firstElement) {
@@ -91,19 +120,39 @@ export function SiteHeader() {
     };
 
     document.addEventListener("keydown", handleKeyDown);
+    desktopQuery.addEventListener("change", closeOnDesktop);
 
     return () => {
       window.cancelAnimationFrame(focusFrame);
       document.removeEventListener("keydown", handleKeyDown);
+      desktopQuery.removeEventListener("change", closeOnDesktop);
+      // Exiting links must not remain focusable during the closing animation.
+      panel.inert = true;
       document.body.style.overflow = previousOverflow;
-      previousFocus?.focus();
+      document.documentElement.style.overflow = previousRootOverflow;
+      background.forEach(({ element, inert }) => {
+        element.inert = inert;
+      });
+      const restoreTarget = previousFocus?.isConnected && previousFocus.getClientRects().length
+        ? previousFocus
+        : navigation.querySelector<HTMLElement>('[aria-label="Primary navigation"] [aria-current="page"]')
+          ?? navigation.querySelector<HTMLElement>("header a");
+      restoreTarget?.focus({ preventScroll: true });
     };
   }, [isMenuOpen]);
 
-  const closeMenu = () => setIsMenuOpen(false);
+  const closeMenu = () => setOpenMenuPathname(null);
+  const isActive = (href: string) => pathname === href.split("#")[0];
 
   return (
-    <>
+    <div
+      ref={navigationRef}
+      className={isMenuOpen ? "fixed inset-0 z-50" : undefined}
+      data-menu-open={isMenuOpen}
+      role={isMenuOpen ? "dialog" : undefined}
+      aria-modal={isMenuOpen ? true : undefined}
+      aria-label={isMenuOpen ? "Mobile navigation" : undefined}
+    >
       <header
         data-state={isScrolled ? "floating" : "expanded"}
         className={`pointer-events-none fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-300 ease-out ${
@@ -126,6 +175,7 @@ export function SiteHeader() {
           >
             <Link
               href="/#home"
+              onClick={closeMenu}
               className="group flex min-w-0 items-center gap-3 rounded-control focus-visible:outline-offset-4"
               aria-label="Dr. Ashok A. Patil, Home"
             >
@@ -150,7 +200,8 @@ export function SiteHeader() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="rounded-control px-3 py-2 text-[0.82rem] font-semibold text-muted transition-colors duration-200 hover:bg-soft-accent hover:text-primary-dark focus-visible:text-primary-dark xl:px-3.5 xl:text-sm"
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  className="rounded-control px-3 py-2 text-[0.82rem] font-semibold text-muted transition-colors duration-200 hover:bg-soft-accent hover:text-primary-dark focus-visible:text-primary-dark aria-[current=page]:bg-soft-accent aria-[current=page]:text-primary-dark xl:px-3.5 xl:text-sm"
                 >
                   {item.label}
                 </Link>
@@ -172,8 +223,8 @@ export function SiteHeader() {
                 className="relative grid h-11 w-12 place-items-center rounded-control border border-border-strong bg-surface text-primary-dark shadow-soft transition-[transform,border-color,box-shadow] duration-200 hover:border-primary/50 hover:shadow-card active:scale-[0.97] lg:hidden"
                 aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                 aria-expanded={isMenuOpen}
-                aria-controls="mobile-navigation"
-                onClick={() => setIsMenuOpen((current) => !current)}
+                aria-controls={isMenuOpen ? "mobile-navigation" : undefined}
+                onClick={() => setOpenMenuPathname((current) => current === pathname ? null : pathname)}
               >
                 <span className="sr-only">
                   {isMenuOpen ? "Close menu" : "Open menu"}
@@ -209,10 +260,7 @@ export function SiteHeader() {
           <motion.div
             id="mobile-navigation"
             ref={menuPanelRef}
-            className="fixed inset-0 z-40 overflow-y-auto bg-surface/98 px-[var(--container-gutter)] pb-8 pt-28 backdrop-blur-2xl focus:outline-none lg:hidden"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile navigation"
+            className="fixed inset-0 z-40 overflow-y-auto overscroll-contain bg-surface/98 px-[var(--container-gutter)] pb-8 pt-28 backdrop-blur-2xl focus:outline-none lg:hidden"
             tabIndex={-1}
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -250,8 +298,9 @@ export function SiteHeader() {
                     >
                       <Link
                         href={item.href}
+                        aria-current={isActive(item.href) ? "page" : undefined}
                         onClick={closeMenu}
-                        className="group flex min-h-16 items-center justify-between rounded-control px-1 py-3 text-2xl font-bold tracking-[-0.03em] text-text transition-colors hover:text-primary focus-visible:text-primary"
+                        className="group flex min-h-16 items-center justify-between rounded-control px-1 py-3 text-2xl font-bold tracking-[-0.03em] text-text transition-colors hover:text-primary focus-visible:text-primary aria-[current=page]:bg-soft-accent aria-[current=page]:text-primary-dark"
                       >
                         <span>{item.label}</span>
                         <span className="text-xs font-bold tracking-[0.12em] text-muted transition-colors group-hover:text-accent">
@@ -285,6 +334,6 @@ export function SiteHeader() {
           </motion.div>
         ) : null}
       </AnimatePresence>
-    </>
+    </div>
   );
 }

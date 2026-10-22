@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NPM_VERSION = "10.8.2"
+
+# Netlify automatically installs its current OpenNext adapter. Keep the normal
+# Next.js output so /api/enquiry runs as a serverless Node.js route handler.
+# Store mail credentials in Netlify's UI, never in this file.
