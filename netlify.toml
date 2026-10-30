@@ -4,7 +4,13 @@
 
 [build.environment]
   NPM_VERSION = "10.8.2"
+  # This site needs the runtime for /api/enquiry; never skip it as a static export.
+  NETLIFY_NEXT_PLUGIN_SKIP = "false"
 
-# Netlify automatically installs its current OpenNext adapter. Keep the normal
-# Next.js output so /api/enquiry runs as a serverless Node.js route handler.
+# The existing Netlify project did not auto-install its Next.js runtime.
+# Declare the official adapter explicitly so Next.js output is transformed into
+# Netlify routes, image handling and a serverless Node.js enquiry handler.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
 # Store mail credentials in Netlify's UI, never in this file.

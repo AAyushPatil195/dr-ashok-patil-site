@@ -7,8 +7,9 @@ subject to domain setup and launch approval.
 ## Development and verification
 
 Use Node.js 24 (`.nvmrc`) and npm 10.8.2 (`packageManager` / `netlify.toml`).
-Checks ran locally on Node 24.21.0 / npm 10.8.1; Netlify's npm 10.8.2 installation
-and Linux adapter build remain to be verified by the first hosted deploy.
+The initial local checks used Node 24.21.0 / npm 10.8.1. The owner-supplied
+Netlify log confirms Node 24.22.1 / npm 10.8.2 and a successful Linux Next.js
+build, but no Next.js adapter execution. See the 404 repair notes below.
 
 ```bash
 npm ci
@@ -49,16 +50,25 @@ outside the sandbox after a repeat sandbox run hit an EPERM on generated types.
   retains `next dev`.
 - Next.js, React, Motion, Lucide, local Manrope fonts, Resend and Zod are production
   dependencies. Tailwind/PostCSS, ESLint and TypeScript remain build dependencies.
-  No new package was added. Fonts require no Google Fonts download during builds.
+  The official Netlify Next.js adapter is also a build dependency. Fonts require
+  no Google Fonts download during builds.
 - `package-lock.json` locks resolution. `npm audit --omit=dev` reported **zero
-  known vulnerabilities on 2026-10-22**, an advisory snapshot. The existing install
-  has extraneous optional/WASM packages; use `npm ci` for a clean installation.
+  known vulnerabilities on 2026-10-22**, an advisory snapshot. A fresh audit on
+  2026-10-30 found new Next.js/Zod advisories; Next.js and eslint-config-next are
+  now 16.4.3 and Zod is 4.6.6. The patched dependency installation reports zero
+  known vulnerabilities. Use `npm ci` for a clean installation.
 
 ## Netlify integration
 
 `netlify.toml` specifies `npm run build`, publish directory `.next` and npm 10.8.2;
-`.nvmrc` selects Node 24. Netlify automatically installs its current OpenNext
-adapter; do not add or pin an adapter package. Keep standard Next.js output:
+`.nvmrc` selects Node 24. Netlify normally installs its OpenNext adapter
+automatically, but the existing site's deploy log shows that did not happen.
+This project therefore explicitly declares `@netlify/plugin-nextjs` in
+`netlify.toml` and installs the current 5.x adapter as a devDependency (locked
+to 5.16.5). This supported fallback requires maintaining the dependency;
+UI-installed/automatic runtimes normally receive updates from Netlify instead.
+`NETLIFY_NEXT_PLUGIN_SKIP=false` explicitly preserves server support.
+Keep standard Next.js output:
 do not use `output: "export"`, publish `out`, disable the adapter or add a catch-all
 SPA rewrite, because the enquiry handler needs a server.
 
@@ -69,6 +79,49 @@ There is no custom server or filesystem persistence. This source review and loca
 build do not replace the first hosted adapter build and smoke test.
 
 Source: [Netlify Next.js support](https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/).
+
+## Repairing the existing Netlify 404
+
+The supplied deploy log compiled all pages and `/api/enquiry`, then went directly
+to uploading raw `.next` output (113 files, zero functions). It contains no
+`@netlify/plugin-nextjs` lifecycle or function-bundling stage. A successful
+`next build` alone does not prepare a server-based Next.js site for Netlify.
+The missing adapter execution explains the 404; the log does not establish why
+automatic runtime installation was missing/disabled on this existing project.
+
+Publish the updated `netlify.toml`, `package.json`, `package-lock.json`,
+`eslint.config.mjs` and this README to the connected GitHub branch, then trigger
+a deploy with cleared cache. ESLint excludes Netlify's generated build output.
+Do not change the correct root base directory, `npm run build` command or `.next`
+publish directory. If an adapter-disable setting exists in Netlify's dashboard,
+enable the Next.js runtime/build plugins. Do not use `NETLIFY_NEXT_PLUGIN_SKIP=true`
+or `1`; the file configuration explicitly sets it to false for this application.
+
+The next deploy should show the Next.js runtime being loaded and executing its
+build hooks, followed by server function bundling before deployment. For the
+first corrected deploy, expect at least one Next.js server function rather than
+the supplied log's zero-function upload. Check `/`, `/about`, `/contact`, images,
+`/robots.txt` and `/sitemap.xml`; `GET /api/enquiry` should return 405 instead of
+Netlify's generic 404. Test the enquiry POST with approved mail settings separately.
+
+Local repair validation (2026-10-30): lint, TypeScript and all 19 regression
+tests passed. A full offline Netlify build using CLI 27.16.1 loaded runtime
+5.16.5, built Next.js 16.4.3 and successfully bundled
+`___netlify-server-handler`. The complete Netlify build exited successfully;
+this verifies packaging locally, not the live site's dashboard settings or
+deployment. The final dependency audit reported zero known vulnerabilities.
+
+For a local packaging check without publishing, use a temporary CLI:
+
+```bash
+npm exec --yes --package=netlify-cli@27.16.1 -- netlify build --offline --context production
+```
+
+Set `NEXT_PUBLIC_SITE_URL=https://drashokpatil.netlify.app` and keep
+`NEXT_PUBLIC_SITE_INDEXING_ENABLED=false` for staging. The offline build does not
+read the project's Netlify dashboard configuration or publish a deployment.
+
+Source: [Official adapter manual installation](https://github.com/opennextjs/opennextjs-netlify#manually-installing-the-nextjs-runtime).
 
 ## Environment variables
 
